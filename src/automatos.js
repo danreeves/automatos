@@ -1,9 +1,9 @@
-;(function(window, document, undefined) {
+(function(window, document, undefined) {
     'use strict';
 
     var vendors = ['webkit', 'moz'];
-    var requestAnimationFrame = undefined;
-    var cancelAnimationFrame = undefined;
+    var requestAnimationFrame;
+    var cancelAnimationFrame;
 
     for(var x = 0; x < vendors.length && !requestAnimationFrame; ++x) {
         requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
@@ -57,14 +57,12 @@
     // transitionEvent && e.addEventListener(transitionEvent, function() {
     // });
 
-    /* jshint ignore:start */
     if (typeof define === 'function' && define.amd) {
-      define(function() { return automatos; });
+        define(function() { return automatos; });
     } else if (typeof module !== 'undefined' && module.exports) {
-      module.exports = automatos;
+        module.exports = automatos;
     } else if (typeof window !== 'undefined') {
-      window.automatos = window.swal = automatos;
+        window.automatos = window.swal = automatos;
     }
-    /* jshint ignore:end */
 
 })(window, document);
