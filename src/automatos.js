@@ -2,28 +2,28 @@
     'use strict';
 
     var vendors = ['webkit', 'moz'];
-    var requestAnimationFrame;
-    var cancelAnimationFrame;
+    // var requestAnimationFrame;
+    // var cancelAnimationFrame;
 
-    for(var x = 0; x < vendors.length && !requestAnimationFrame; ++x) {
-        requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-        cancelAnimationFrame = (window[vendors[x]+'CancelAnimationFrame'] ||
-                                window[vendors[x]+'CancelRequestAnimationFrame']);
-    }
+    // for(var x = 0; x < vendors.length && !requestAnimationFrame; ++x) {
+    //     requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+    //     cancelAnimationFrame = (window[vendors[x]+'CancelAnimationFrame'] ||
+    //                             window[vendors[x]+'CancelRequestAnimationFrame']);
+    // }
 
-    if (!requestAnimationFrame) {
-        requestAnimationFrame = window.requestAnimationFrame;
-        cancelAnimationFrame = window.cancelAnimationFrame;
-    }
+    // if (!requestAnimationFrame) {
+    //     requestAnimationFrame = window.requestAnimationFrame;
+    //     cancelAnimationFrame = window.cancelAnimationFrame;
+    // }
 
     function whichTransitionEvent () {
         var t,
             el = document.createElement('fake'),
             transitions = {
-                'transition': 'transitionend',
-                'OTransition': 'oTransitionEnd',
-                'MozTransition': 'transitionend',
-                'WebkitTransition': 'webkitTransitionEnd'
+                'animation': 'animationend',
+                'OAnimation': 'oAnimationEnd',
+                'MozAnimation': 'Animationend',
+                'WebkitAnimation': 'webkitAnimationEnd'
             };
 
         for (t in transitions) {
@@ -42,15 +42,34 @@
         }
     }
 
-    function automatos (element, animation) {
+    function loop (ts) {
+        // console.log(ts);
+        requestAnimationFrame(loop);
+    }
+
+    function automatos (element, animationName, animationLength) {
         var el = (typeof element === 'string') ? document.querySelector(element) : element,
             endEvent = whichTransitionEvent(),
             style = whichStyleName();
+        var auto = new Promise(function (resolve) {
 
-        el.addEventListener(endEvent, function (e) {
-            console.log(e,'ended');
+            el.addEventListener(endEvent, function (e) {
+                el.style[style+'-name'] = null;
+                el.style[style+'-duration'] = null;
+                el.removeEventListener(endEvent);
+                resolve();
+            });
+            el.style[style+'-name'] = animationName;
+            el.style[style+'-duration'] = animationLength + 's';
+
         });
-        el.style[style+'-name'] = animation;
+        auto.start = Math.floor( Date.now() / 1000);
+        auto.after = function (ms, callback) {
+            console.log(ms, this.start-Math.floor(Date.now()/1000));
+            requestAnimationFrame(loop);
+            return this;
+        };
+        return auto;
     }
 
     // var transitionEvent = whichTransitionEvent();

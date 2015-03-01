@@ -10,5 +10,16 @@
     <span class="demo">Hello, world!</span>
 </div>
 <script src="../src/automatos.js"></script>
+<script>
+
+        automatos(document.querySelector('.demo'), 'bounce', 1).
+            after(300, function () {
+                console.log('worked')
+            })
+            .then(function () {
+                automatos(document.querySelector('.demo'), 'shake', 1);
+            });
+
+</script>
 </body>
 </html>

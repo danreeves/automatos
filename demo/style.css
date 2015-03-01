@@ -32,3 +32,23 @@
   -webkit-animation-name: bounce;
   -webkit-transform-origin: center bottom;
 }
+
+@keyframes shake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+.shake {
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation-name: shake;
+}
