@@ -5,7 +5,7 @@
  * @link https://github.com/danreeves/automatos
  * @license MIT
  */
-(function(window, document, undefined) {
+(function (window, document, undefined) {
     'use strict';
 
     var vendors = ['webkit', 'moz'];
