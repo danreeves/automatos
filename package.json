@@ -1,0 +1,39 @@
+
+{
+  "name": "automatos",
+  "version": "0.0.0",
+  "description": "A CSS Animation controller",
+  "main": "dist/automatos.js",
+  "scripts": {
+    "test": "gulp tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danreeves/automatos.git"
+  },
+  "keywords": [
+    "css",
+    "animation"
+  ],
+  "author": "Dan Reeves <hey@danreev.es> (http://danreev.es/)",
+  "contributors": [
+    "Dan Reeves <hey@danreev.es> (http://danreev.es/)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danreeves/automatos/issues"
+  },
+  "homepage": "https://github.com/danreeves/automatos",
+  "dependencies": {},
+  "devDependencies": {
+    "codecov.io": "0.0.8",
+    "gulp": "^3.8.10",
+    "gulp-header": "^1.2.2",
+    "gulp-istanbul": "^0.5.0",
+    "gulp-jshint": "^1.9.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.2",
+    "mocha-lcov-reporter": "0.0.1"
+  }
+}
