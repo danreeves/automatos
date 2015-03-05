@@ -1,21 +1,6 @@
 (function (window, document, undefined) {
     'use strict';
 
-    var vendors = ['webkit', 'moz'];
-    // var requestAnimationFrame;
-    // var cancelAnimationFrame;
-
-    // for(var x = 0; x < vendors.length && !requestAnimationFrame; ++x) {
-    //     requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-    //     cancelAnimationFrame = (window[vendors[x]+'CancelAnimationFrame'] ||
-    //                             window[vendors[x]+'CancelRequestAnimationFrame']);
-    // }
-
-    // if (!requestAnimationFrame) {
-    //     requestAnimationFrame = window.requestAnimationFrame;
-    //     cancelAnimationFrame = window.cancelAnimationFrame;
-    // }
-
     function whichTransitionEvent () {
         var t,
             el = document.createElement('fake'),

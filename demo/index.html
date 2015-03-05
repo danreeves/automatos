@@ -13,18 +13,18 @@
 <script>
 
         automatos(document.querySelector('.demo'), 'fadeIn', 1000, '1')
-            .after(0, function () {
-                console.log('test')
-            })
             .then(function () {
                 return automatos(document.querySelector('.demo'), 'fadeIn', 1000, '1', 'reverse');
             })
-            .after(1000, function () {
-                this.el.style.display = 'none';
+            .after(100, function () {
+                console.log('.after is not yet defined on the object');
+            })
+            .then(function (el) {
+                console.log('would run if the .after didn\'t cause an exception');
+                el.style.display = 'none';
             });
 
 
-console.log(auto);
 </script>
 </body>
 </html>
