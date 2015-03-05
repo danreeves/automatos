@@ -48,7 +48,8 @@
             style = whichStyleName();
 
         // Promise definition
-        var auto = new Promise(function (resolve) {
+        var auto = {};
+        auto = new Promise(function (resolve) {
             el.addEventListener(endEvent, function (e) {
                 auto.stopped = true;
                 el.style[style+'-name'] = null;
@@ -122,7 +123,7 @@
     } else if (typeof module !== 'undefined' && module.exports) {
         module.exports = automatos;
     } else if (typeof window !== 'undefined') {
-        window.automatos = window.swal = automatos;
+        window.automatos = automatos;
     }
 
 })(window, document);
