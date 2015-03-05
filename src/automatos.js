@@ -42,39 +42,80 @@
         }
     }
 
-    function loop (ts) {
-        // console.log(ts);
-        requestAnimationFrame(loop);
-    }
-
-    function automatos (element, animationName, animationLength) {
+    function automatos (element, animationName, animationLength, iterationCount, direction) {
         var el = (typeof element === 'string') ? document.querySelector(element) : element,
             endEvent = whichTransitionEvent(),
             style = whichStyleName();
-        var auto = new Promise(function (resolve) {
 
+        // Promise definition
+        var auto = new Promise(function (resolve) {
             el.addEventListener(endEvent, function (e) {
+                auto.stopped = true;
                 el.style[style+'-name'] = null;
                 el.style[style+'-duration'] = null;
+                el.style[style+'-play-state'] = null;
                 el.removeEventListener(endEvent);
-                resolve();
+                setTimeout(function () {
+                    resolve(el);
+                }, 0);
             });
             el.style[style+'-name'] = animationName;
-            el.style[style+'-duration'] = animationLength + 's';
-
+            if (animationLength != null) el.style[style+'-duration'] = (animationLength/1000) + 's';
+            if (iterationCount != null) el.style[style+'-iteration-count'] = iterationCount;
+            if (direction != null) el.style[style+'-direction'] = direction;
         });
-        auto.start = Math.floor( Date.now() / 1000);
+
+        auto.el = el;
+        auto.start = Math.floor(Date.now());
+        auto.stopped = false;
+        auto.queue = [];
+
+        // "Private" methods
+        auto._runQueue = function () {
+            var that = this;
+            setTimeout(function () {
+                if (that.queue.length) {
+                    var now = Math.floor(Date.now());
+                    if ((now - that.start) >= that.queue[0].ms) {
+                        that.queue[0].callback.bind(that)();
+                        that.start = now;
+                        that.queue = that.queue.slice(1, that.queue.length);
+                    }
+                    if (that.queue.length) that._runQueue();
+                }
+            }, 0);
+        };
+
+        // Public methods
         auto.after = function (ms, callback) {
-            console.log(ms, this.start-Math.floor(Date.now()/1000));
-            requestAnimationFrame(loop);
+            this.queue.push({
+                ms: ms,
+                callback: callback
+            });
+            this._runQueue();
             return this;
         };
+        auto.play = function () {
+            this.el.style[style+'-play-state'] = 'running';
+            return this;
+        };
+        auto.pause = function () {
+            this.el.style[style+'-play-state'] = 'paused';
+            return this;
+        };
+        auto.stop = function () {
+            var event = document.createEvent('AnimationEvent');
+            event.initEvent(endEvent);
+            this.el.dispatchEvent(event);
+            return this;
+        };
+        auto.direction = function (direction) {
+            this.el.style[style+'-direction'] = direction;
+            return this;
+        };
+
         return auto;
     }
-
-    // var transitionEvent = whichTransitionEvent();
-    // transitionEvent && e.addEventListener(transitionEvent, function() {
-    // });
 
     if (typeof define === 'function' && define.amd) {
         define(function() { return automatos; });

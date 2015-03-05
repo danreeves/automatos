@@ -12,14 +12,19 @@
 <script src="../src/automatos.js"></script>
 <script>
 
-        automatos(document.querySelector('.demo'), 'bounce', 1).
-            after(300, function () {
-                console.log('worked')
+        console.time('auto');
+
+
+        automatos(document.querySelector('.demo'), 'fadeIn', 1000, '1')
+            .after(0, function () {
+                console.log('test')
             })
             .then(function () {
-                automatos(document.querySelector('.demo'), 'shake', 1);
+                return automatos(document.querySelector('.demo'), 'fadeIn', 1000, '1', 'reverse');
+            })
+            .after(1000, function () {
+                this.el.style.display = 'none';
             });
-
 </script>
 </body>
 </html>
