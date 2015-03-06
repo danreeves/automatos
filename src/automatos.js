@@ -40,6 +40,7 @@
                 el.style[style+'-name'] = null;
                 el.style[style+'-duration'] = null;
                 el.style[style+'-play-state'] = null;
+                el.style[style+'-iteration-count'] = null;
                 el.removeEventListener(endEvent);
                 setTimeout(function () {
                     resolve(el);

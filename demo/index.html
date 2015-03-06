@@ -12,59 +12,7 @@
 <script src="../src/automatos.js"></script>
 <script>
 
-        automatos(document.querySelector('.demo'), 'fadeIn', 1000, '1')
-            .after(100, function () {
-                console.log('this one works');
-            })
-            .then(function () {
-                console.log('this one works too')
-                return automatos(document.querySelector('.demo'), 'fadeIn', 1000, '1', 'reverse');
-            })
-            .after(100, function () {
-                console.log('.after is not yet defined on the object!');
-            })
-            .then(function (el) {
-                console.log('doesnt run because .after cause an exception');
-                el.style.display = 'none';
-            });
-
-
-        // var iter = 0;
-
-        // function chainablePromise () {
-        //     var p = new Promise(function (resolve) {
-        //         resolve();
-        //     });
-        //     p.test = function () {
-        //         console.log(iter++);
-        //         return this;
-        //     }
-        //     return p;
-        // }
-
-        // chainablePromise()
-        //     .test()
-        //     .then(function () {
-        //         console.log('runs');
-        //         return chainablePromise();
-        //     })
-        //     .test()
-        //     .then(function () {
-        //         console.log('also runs');
-        //     });
-
-
-        // expected:
-        // > 0
-        // > "runs"
-        // > 1
-        // > "also runs"
-
-        // actual:
-        // > 0
-        // > TypeError: undefined is not a function
-        // > "runs"
-
+        automatos(document.querySelector('.demo'), 'fadeIn', 10000);
 
 </script>
 </body>
