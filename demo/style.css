@@ -39,7 +39,7 @@
   -webkit-transform-origin: center bottom;
 }
 
-@keyframes shake {
+@-webkit-keyframes shake {
   0%, 100% {
     transform: translate3d(0, 0, 0);
   }
@@ -58,11 +58,11 @@
 }
 
 
-@keyframes fadeIn {
+@-webkit-keyframes fadeIn {
   0% {opacity: 0;}
   100% {opacity: 1;}
 }
 
 .fadeIn {
-  animation-name: fadeIn;
+  -webkit-animation-name: fadeIn;
 }
