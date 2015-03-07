@@ -1,6 +1,6 @@
 /**
  * automatos - A CSS Animation controller
- * @version v0.0.0
+ * @version v0.1.0
  * @author Dan Reeves <hey@danreev.es> (http://danreev.es/)
  * @link https://github.com/danreeves/automatos
  * @license MIT
@@ -136,10 +136,6 @@
             var event = document.createEvent('AnimationEvent');
             event.initEvent(endEvent);
             this.el.dispatchEvent(event);
-            return this;
-        };
-        auto.direction = function (direction) {
-            this.el.style[style+'-direction'] = direction;
             return this;
         };
 
