@@ -17,12 +17,6 @@
             name: 'shake',
             duration: 1000
         })
-        .after(500, function () {
-            this.pause();
-        })
-        .after(500, function () {
-            this.play();
-        })
         .then(function () {
             console.log('Animation over!');
         })
