@@ -3,6 +3,8 @@
 
 Automatos is a small Javascript library for controlling CSS Animations.
 
+**Requires Promises**
+
 ## Usage
 
 ```
