@@ -50,7 +50,7 @@
         // Promise definition
         var auto = {};
         auto.promise = new Promise(function (resolve) {
-            el.addEventListener(endEvent, function (e) {
+            var eh = function (e) {
                 auto.stopped = true;
                 el.style[style+'-name'] = null;
                 el.style[style+'-duration'] = null;
@@ -60,12 +60,13 @@
                 el.style[style+'-fill-mode'] = null;
                 el.style[style+'-direction'] = null;
                 el.style[style+'-delay'] = null;
-                el.removeEventListener(endEvent);
-                auto._runThens();
+                el.removeEventListener(endEvent, eh);
                 setTimeout(function () {
+                    auto._runThens();
                     resolve(el);
                 }, 0);
-            });
+            };
+            el.addEventListener(endEvent, eh);
             el.style[style+'-name'] = options.name;
             if (options.duration != null) el.style[style+'-duration'] = (options.duration/1000) + 's';
             if (options.iterations != null) el.style[style+'-iteration-count'] = options.iterations;
@@ -80,7 +81,6 @@
         auto.stopped = false;
         auto.queue = [];
         auto.thenQueue = [];
-
 
         // "Private" methods
         auto._runQueue = function () {
@@ -98,7 +98,8 @@
             }, 0);
         };
         auto._runThens = function () {
-            this.thenQueue.forEach(function (v) {
+            this.thenQueue.forEach(function (v, i, a) {
+                a = a.splice(1, a.length);
                 if (typeof v === 'function') v();
             });
         };
@@ -113,7 +114,7 @@
             return this;
         };
         auto.then = function (callback) {
-            this.thenQueue.push(callback);
+            this.thenQueue.push(callback.bind(this));
             return this;
         };
         auto.play = function () {

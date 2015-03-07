@@ -12,17 +12,11 @@
 <script src="../src/automatos.js"></script>
 <script>
 
-        var anim1 = automatos({
-            el: document.querySelector('.demo'),
-            name: 'shake',
-            duration: 1000
-        })
-        .then(function () {
-            console.log('Animation over!');
-        })
-        .then(function () {
-            console.log('Its overrrrr');
-        });
+            automatos({
+                el: '.demo',
+                name: 'fadeIn',
+                duration: 5000,
+            });
 
 </script>
 </body>
