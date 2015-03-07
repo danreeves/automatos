@@ -12,7 +12,23 @@
 <script src="../src/automatos.js"></script>
 <script>
 
-        automatos(document.querySelector('.demo'), 'fadeIn', 10000);
+        var anim1 = automatos({
+            el: document.querySelector('.demo'),
+            name: 'shake',
+            duration: 1000
+        })
+        .after(500, function () {
+            this.pause();
+        })
+        .after(500, function () {
+            this.play();
+        })
+        .then(function () {
+            console.log('Animation over!');
+        })
+        .then(function () {
+            console.log('Its overrrrr');
+        });
 
 </script>
 </body>

@@ -27,35 +27,60 @@
         }
     }
 
-    function automatos (element, animationName, animationLength, iterationCount, direction) {
-        var el = (typeof element === 'string') ? document.querySelector(element) : element,
+    function automatos (opts) {
+
+        if (opts == null) throw 'NotEnoughArguments Error!';
+        if (!opts.el || !opts.name || !opts.duration) throw 'NotEnoughArguments Error!';
+
+        var options = {
+            el: opts.el || false,
+            name: opts.name || false,
+            duration: opts.duration || false,
+            iterations: opts.iterations || false,
+            direction: opts.direction || false,
+            delay: opts.delay || false,
+            fillMode: opts.fillMode || false,
+            timingFunc: opts.timingFunc || false
+        };
+
+        var el = (typeof options.el === 'string') ? document.querySelector(options.el) : options.el,
             endEvent = whichTransitionEvent(),
             style = whichStyleName();
 
         // Promise definition
         var auto = {};
-        auto = new Promise(function (resolve) {
+        auto.promise = new Promise(function (resolve) {
             el.addEventListener(endEvent, function (e) {
                 auto.stopped = true;
                 el.style[style+'-name'] = null;
                 el.style[style+'-duration'] = null;
                 el.style[style+'-play-state'] = null;
                 el.style[style+'-iteration-count'] = null;
+                el.style[style+'-timing-function'] = null;
+                el.style[style+'-fill-mode'] = null;
+                el.style[style+'-direction'] = null;
+                el.style[style+'-delay'] = null;
                 el.removeEventListener(endEvent);
+                auto._runThens();
                 setTimeout(function () {
                     resolve(el);
                 }, 0);
             });
-            el.style[style+'-name'] = animationName;
-            if (animationLength != null) el.style[style+'-duration'] = (animationLength/1000) + 's';
-            if (iterationCount != null) el.style[style+'-iteration-count'] = iterationCount;
-            if (direction != null) el.style[style+'-direction'] = direction;
+            el.style[style+'-name'] = options.name;
+            if (options.duration != null) el.style[style+'-duration'] = (options.duration/1000) + 's';
+            if (options.iterations != null) el.style[style+'-iteration-count'] = options.iterations;
+            if (options.direction != null) el.style[style+'-direction'] = options.direction;
+            if (options.delay != null) el.style[style+'-delay'] = options.delay;
+            if (options.fillMode != null) el.style[style+'-fill-mode'] = options.fillMode;
+            if (options.timingFunction != null) el.style[style+'-timing-function'] = options.timingFunction;
         });
 
         auto.el = el;
         auto.start = Math.floor(Date.now());
         auto.stopped = false;
         auto.queue = [];
+        auto.thenQueue = [];
+
 
         // "Private" methods
         auto._runQueue = function () {
@@ -72,6 +97,11 @@
                 }
             }, 0);
         };
+        auto._runThens = function () {
+            this.thenQueue.forEach(function (v) {
+                if (typeof v === 'function') v();
+            });
+        };
 
         // Public methods
         auto.after = function (ms, callback) {
@@ -80,6 +110,10 @@
                 callback: callback
             });
             this._runQueue();
+            return this;
+        };
+        auto.then = function (callback) {
+            this.thenQueue.push(callback);
             return this;
         };
         auto.play = function () {
