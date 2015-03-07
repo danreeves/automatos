@@ -1,7 +1,7 @@
 
 {
   "name": "automatos",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A CSS Animation controller",
   "main": "dist/automatos.js",
   "scripts": {

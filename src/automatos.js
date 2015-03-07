@@ -131,10 +131,6 @@
             this.el.dispatchEvent(event);
             return this;
         };
-        auto.direction = function (direction) {
-            this.el.style[style+'-direction'] = direction;
-            return this;
-        };
 
         return auto;
     }
