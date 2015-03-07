@@ -16,6 +16,12 @@
                 el: '.demo',
                 name: 'fadeIn',
                 duration: 5000,
+            })
+            .then(function () {
+                console.log('then');
+            })
+            .promise.then(function () {
+                console.log('promise.then')
             });
 
 </script>

@@ -13,7 +13,8 @@
   },
   "keywords": [
     "css",
-    "animation"
+    "animation",
+    "promise"
   ],
   "author": "Dan Reeves <hey@danreev.es> (http://danreev.es/)",
   "contributors": [
